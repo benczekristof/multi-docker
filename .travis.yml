@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+    - docker
+
+before_install:
+    - docker build -t benczekristof/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true benczekristof/react-test npm test
+
+after_success:
+    - docker build -t benczekristof/multi-client ./client .
+    - docker build -t benczekristof/multi-nginx ./nginx .
+    - docker build -t benczekristof/multi-server ./server .
+    - docker build -t benczekristof/multi-worker ./worker .
+#login to docker cli
+    - echo "$DockerPassword" | docker login -u "$DockerId" --password-stdin
+#push them to docker hub
+    - docker push benczekristof/multi-client
+    - docker push benczekristof/multi-nginx
+    - docker push benczekristof/multi-server
+    - docker push benczekristof/multi-worker
