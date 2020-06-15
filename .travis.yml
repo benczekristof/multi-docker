@@ -10,8 +10,8 @@ script:
     - docker run -e CI=true benczekristof/react-test npm test
 
 after_success:
-    - docker build -t benczekristof/multi-client ./client 
-    - docker build -t benczekristof/multi-nginx ./nginx 
+    - docker build -t benczekristof/multi-client ./client
+    - docker build -t benczekristof/multi-nginx ./nginx
     - docker build -t benczekristof/multi-server ./server 
     - docker build -t benczekristof/multi-worker ./worker 
 #login to docker cli
