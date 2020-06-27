@@ -21,3 +21,16 @@ after_success:
     - docker push benczekristof/multi-nginx
     - docker push benczekristof/multi-server
     - docker push benczekristof/multi-worker
+#for deployment
+deploy:
+    provider: elasticbeanstalk
+    edge: true
+    region: eu-central-1
+    app: multi-docker
+    env: MultiDocker-env
+    bucket_name: elasticbeanstalk-eu-central-1-591837140444
+    bucket_path: docker-multi
+    on: 
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
